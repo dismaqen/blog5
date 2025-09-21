@@ -2,64 +2,35 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="monetag" content="84d5db59cf8bfd7c63480821a1e1f6e1">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mini Game Monetag</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 50px;
-      background: #f2f2f2;
+  <meta name="referrer" content="no-referrer-when-downgrade" />
+  <title>Auto Redirect</title>
+  <script>
+    // config UID, WID, dan target
+    var uid = "488637";
+    var wid = "741404";
+    var target = "https://spontaneous-nougat-ce3c2b.netlify.app/";
+
+    // fungsi helper: encode jadi base64
+    function utf8ToBase64(str) {
+      return btoa(unescape(encodeURIComponent(str)));
     }
-    .game-container {
-      background: white;
-      padding: 20px;
-      margin: auto;
-      max-width: 400px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      border-radius: 10px;
+
+    // generate link redirect sesuai format p.pcdelv.com
+    function generateRedirect(uid, wid, targetUrl) {
+      var encoded = encodeURIComponent(targetUrl);      // URL-encode
+      var b64 = utf8ToBase64(encoded);                  // Base64
+      var cb = Date.now().toString();                   // cache buster
+      return "http://p.pcdelv.com/go/" + uid + "/" + wid + "/" + b64 + "?cb=" + cb;
     }
-    input[type="number"] {
-      padding: 10px;
-      font-size: 16px;
-      width: 100px;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      margin-top: 10px;
-    }
-    #message {
-      margin-top: 20px;
-      font-weight: bold;
-    }
-  </style>
+
+    // saat halaman dimuat, langsung redirect
+    window.onload = function() {
+      var redirectUrl = generateRedirect(uid, wid, target);
+      window.location.href = redirectUrl;
+    };
+  </script>
 </head>
 <body>
-  <div class="game-container">
-    <h2>🎯 Tebak Angka (1 - 10)</h2>
-    <p>Masukkan angka dan klik "Tebak"</p>
-    <input type="number" id="guessInput" min="1" max="10">
-    <button onclick="checkGuess()">Tebak</button>
-    <p id="message"></p>
-  </div>
-
-  <script>
-    const secret = Math.floor(Math.random() * 10) + 1;
-    let attempts = 0;
-
-    function checkGuess() {
-      const guess = parseInt(document.getElementById("guessInput").value);
-      attempts++;
-      if (guess === secret) {
-        document.getElementById("message").textContent = `🎉 Benar! Angkanya ${secret}. Tebakan ke-${attempts}.`;
-      } else if (guess < secret) {
-        document.getElementById("message").textContent = "📉 Terlalu kecil!";
-      } else {
-        document.getElementById("message").textContent = "📈 Terlalu besar!";
-      }
-    }
-  </script>
+  <p>Sedang mengalihkan...</p>
 </body>
 </html>
